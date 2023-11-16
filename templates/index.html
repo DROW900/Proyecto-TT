@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <title>Proyecto TT</title>
+</head>
+<body>
+    <div class="header"">
+        <img class="img-logo" src="{{ url_for('static', filename='imgs/logo-escom.png')}}" alt="" srcset="">
+        <h1>Prototipo de limpieza de agua de ducha para el WC</h1>
+    </div>
+
+    <div class="seccion-informacion">
+        <div class="info">
+            <p>Fase </p>
+            <p class="descripcion">El dispositivo se encuentra dispensando la cantidad <br> de regulador de pH para su mezcla</p>
+            <p>Valor de pH: </p>
+            <p>Cantidad de regulador: </p>
+            <p>Valor de turbidez medido: <span class="sp-pendiente">Aún por conocer</span></p>
+            <p>Cantidad de floculante: <span class="sp-negritas">Por definir</span></p>
+        </div>
+
+        <div id="circle">
+            <img class="gota" src="{{ url_for('static', filename='imgs/Gota.png')}}" alt="Imagen gota">
+            <div class='element img-bg-default pour'></div>
+            <div class='element img-bg-default mix'></div>
+            <div class='element img-bg-default polused-water'></div>
+            <div class='element img-bg-default algorithm'></div>
+            <div class='element img-bg-default pour'></div>
+            <div class='element img-bg-default mix'></div>
+            <div class='element img-bg-default wait'></div>
+            <div class='element img-bg-default pour'></div>
+            <div class='element img-bg-default ph'></div>
+            <div class='element img-bg-default algorithm'></div>
+          </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

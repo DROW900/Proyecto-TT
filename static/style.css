@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    font-family: Ubuntu, sans-serif;
+    font-weight: 400;
+}
+
+h1{
+    display: inline;
+    font-size: 20px;
+}
+
+p{
+    margin-top: 10px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    gap: 10px;
+    background: rgba(202.01, 248.63, 243.03, 0.82);
+    width: 100%;
+}
+
+.seccion-informacion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.circulo-mini{
+    width: 50px; 
+    height: 50px;
+}
+
+.info, .guia-grafica{
+    height: 100%;
+    width: 50%;
+    font-size: 30px;
+    height: 80vh;
+}
+
+.guia-grafica{
+    position: relative;
+}
+
+.element{
+    border: solid black;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius:50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%)
+}
+
+.mix{
+    background-image: url('imgs/ventilador.png');
+}
+
+.img-bg-default{
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.filter{
+    background-image: url('imgs/filtro-de-agua.png');
+}
+
+.ph{
+    background-image: url('imgs/probador-de-agua.png');
+}
+
+.algorithm{
+    background-image: url('imgs/algoritmo.png');
+}
+
+.pour{
+    background-image: url('imgs/torrencial.png');
+}
+
+.polused-water{
+    background-image: url('imgs/agua-contaminada.png');
+}
+
+.wait{
+    background-image: url('imgs/esperar.png');
+}
+  
+#circle{
+    position: relative;
+    width: 400px;
+    height:340px;
+    margin: auto;
+}
+
+@media (max-width: 1000px){
+    .seccion-informacion{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .info{
+        width: 100%;
+        height: auto;
+    }
+
+    #circle{
+        margin-top: 125px;
+        margin-bottom: 100px;
+    }
+}
+
+.info{
+    padding-left: 30px;
+    justify-content: center;
+}
+
+.img-logo{
+    width: 100px;
+    height: 83px;
+}
+
+.sp-pendiente{
+    color: red;
+}
+
+.sp-negritas{
+    font-weight: bold;
+}
+
+.gota{
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    left: 80px;
+    top: 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.fill50{
+    background-image:
+    linear-gradient(to top, rgba(245, 246, 252, 0) 25%, rgb(255, 255, 255) 50%),
+    url('imgs/Gota2.png');
+}
+
+.fill25{
+    background-image:
+    linear-gradient(to top, rgba(245, 246, 252, 0) 0%, rgb(255, 255, 255) 25%),
+    url('imgs/Gota2.png');
+}
