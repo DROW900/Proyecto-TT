@@ -26,6 +26,7 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 }
 
 
@@ -37,7 +38,7 @@ p{
 .info, .guia-grafica{
     height: 100%;
     width: 50%;
-    font-size: 30px;
+    font-size: 25px;
     height: 80vh;
 }
 
@@ -48,8 +49,8 @@ p{
 .element{
     border: solid black;
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 7rem;
+    height: 7rem;
     border-radius:50%;
     top: 50%;
     left: 50%;
@@ -129,6 +130,14 @@ p{
 
 .sp-negritas{
     font-weight: bold;
+}
+
+.sp-mgtop_10{
+    margin-top: 30px;
+}
+
+.fase{
+    margin-bottom: 40px;
 }
 
 .gota{

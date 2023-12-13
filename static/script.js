@@ -9,7 +9,7 @@ function initialize(){
     const circles = document.querySelectorAll('.element')
 
     const n = 10;  // numero de circulos
-    const r = 230 // radio
+    const r = 210 // radio
 
     let angulo = 0;
     let originX = circles[0].offsetLeft

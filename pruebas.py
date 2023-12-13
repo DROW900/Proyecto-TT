@@ -47,7 +47,7 @@ def index():
 ## ***** MAIN *****
 if __name__ == '__main__':
     ## Se inicializa el servidor, y se crea el hilo que llevará el flujo del PIC
-    hilo1 = Thread(target=controlarPIC)
-    hilo1.start()
+    #hilo1 = Thread(target=controlarPIC)
+    #hilo1.start()
     app.run(host="localhost" ,debug=True, port=4000)
-    hilo1.join()
+    #hilo1.join()
