@@ -1,53 +1,47 @@
-from threading import Thread
-from flask import Flask, render_template
-import time, serial, json, os
+# Code source: Jaques Grobler
+# License: BSD 3 clause
 
-app = Flask(__name__)
+import matplotlib.pyplot as plt
+import numpy as np
 
-global datosProceso
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
 
-datosProceso = {
-    'instruccion': 'Inicializacion',
-    'isComplete': False,
-    'phMedido': 0,
-    'voltajeTurbidezMedida': 0,
-    'turbidezDeterminadaEnNTU': 0
-} 
+# Load the diabetes dataset
+diabetes_X, diabetes_y = datasets.load_diabetes(return_X_y=True)
 
-## ***** Parte de la comunicación *****
+# Use only one feature
+diabetes_X = diabetes_X[:, np.newaxis, 2]
 
-def controlarPIC():
-    global datosProceso
+# Split the data into training/testing sets
+diabetes_X_train = diabetes_X[:-20]
+diabetes_X_test = diabetes_X[-20:]
 
-    ## Se hace la lectura del fichero con el JSON, validando la existencia de este
-    if not os.path.exists('data.json'):
-        with open('data.json', 'w') as fichero:
-            json.dump(datosProceso,fichero)
-    else:
-        with open('data.json', 'r') as fichero:
-            datosProceso = json.load(fichero)
+# Split the targets into training/testing sets
+diabetes_y_train = diabetes_y[:-20]
+diabetes_y_test = diabetes_y[-20:]
 
-    ## Se abre paso a realizar la secuencia de limpieza, configurando los parámetros de comunicación
-       #arduino = serial.Serial('COM3', 9600)
-        pic = serial.Serial('/dev/ttyS0', 9600, timeout=1);
+# Create linear regression object
+regr = linear_model.LinearRegression()
 
+# Train the model using the training sets
+regr.fit(diabetes_X_train, diabetes_y_train)
 
+# Make predictions using the testing set
+diabetes_y_pred = regr.predict(diabetes_X_test)
 
-## ***** ENDPOINTS DEL SERVIDOR *****
-@app.route('/ping')
-def ping():
-    global valor
-    return datosProceso
+# The coefficients
+print("Coefficients: \n", regr.coef_)
+# The mean squared error
+print("Mean squared error: %.2f" % mean_squared_error(diabetes_y_test, diabetes_y_pred))
+# The coefficient of determination: 1 is perfect prediction
+print("Coefficient of determination: %.2f" % r2_score(diabetes_y_test, diabetes_y_pred))
 
-@app.route("/")
-def index():
-    return render_template("index.html" )
+# Plot outputs
+plt.scatter(diabetes_X_test, diabetes_y_test, color="black")
+plt.plot(diabetes_X_test, diabetes_y_pred, color="blue", linewidth=3)
 
+plt.xticks(())
+plt.yticks(())
 
-## ***** MAIN *****
-if __name__ == '__main__':
-    ## Se inicializa el servidor, y se crea el hilo que llevará el flujo del PIC
-    #hilo1 = Thread(target=controlarPIC)
-    #hilo1.start()
-    app.run(host="localhost" ,debug=True, port=4000)
-    #hilo1.join()
+plt.show()

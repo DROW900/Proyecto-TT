@@ -97,23 +97,6 @@ p{
     margin: auto;
 }
 
-@media (max-width: 1000px){
-    .seccion-informacion{
-        flex-direction: column-reverse;
-        width: 100%;
-    }
-
-    .info{
-        width: 100%;
-        height: auto;
-    }
-
-    #circle{
-        margin-top: 125px;
-        margin-bottom: 100px;
-    }
-}
-
 .info{
     padding-left: 30px;
     justify-content: center;
@@ -126,6 +109,14 @@ p{
 
 .sp-pendiente{
     color: red;
+}
+
+.sp-aceptable{
+    color: green;
+}
+
+.sp-acido{
+    color: orange;
 }
 
 .sp-negritas{
@@ -160,4 +151,45 @@ p{
     background-image:
     linear-gradient(to top, rgba(245, 246, 252, 0) 0%, rgb(255, 255, 255) 25%),
     url('imgs/Gota2.png');
+}
+
+/* Ajustes de acuerdo a las medidas de los dispositivos */
+@media (max-width: 1000px){
+    .seccion-informacion{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .info{
+        width: 100%;
+        height: auto;
+    }
+
+    #circle{
+        margin-top: 125px;
+        margin-bottom: 100px;
+    }
+}
+
+@media (max-width: 720px){
+    .seccion-informacion{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+        .seccion-informacion{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .element{
+        width: 5rem;
+        height: 5rem;
+        background-size: 60%;
+    }
+
+    #circle{
+        margin-top: 125px;
+        margin-bottom: 100px;
+    }
 }
