@@ -1,1 +1,1 @@
-{"instruccion": "Inicializacion", "isComplete": false, "phMedido": 0, "voltajeTurbidezMedida": 0, "turbidezDeterminadaEnNTU": 0}
+{"instruccion": "Dispensando quimicos", "isComplete": false, "phMedido": 0, "voltajeTurbidezMedida": 0, "turbidezDeterminadaEnNTU": 0, "voltajeTurbidezMedidaInicial": "1.09", "phMedidoInicial": "1.35"}
