@@ -4,6 +4,10 @@
     font-weight: 400;
 }
 
+body{
+    width: 100%;
+}
+
 h1{
     display: inline;
     font-size: 20px;
@@ -38,7 +42,7 @@ p{
 .info, .guia-grafica{
     height: 100%;
     width: 50%;
-    font-size: 25px;
+    font-size: 20px;
     height: 80vh;
 }
 
@@ -47,6 +51,7 @@ p{
 }
 
 .element{
+    transition-duration: 1s;
     border: solid black;
     position: absolute;
     width: 7rem;
@@ -57,13 +62,35 @@ p{
     transform: translate(-50%,-50%)
 }
 
-.mix{
-    background-image: url('imgs/ventilador.png');
+.elementFaseActual{
+    transition-duration: 1s;
+    border: solid black;
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    border-radius:50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%)
 }
 
 .img-bg-default{
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 80%;
+}
+
+.fases{
+    position: relative;
+    left: 145px;
+    top: 150px;
+    z-index: 1;
+    font-size: 30px;
+}
+
+/* ***** Carga de imagenes de fondos ***** */
+.mix{
+    background-image: url('imgs/ventilador.png');
 }
 
 .filter{
@@ -89,6 +116,10 @@ p{
 .wait{
     background-image: url('imgs/esperar.png');
 }
+
+.check{
+    background-image: url("imgs/check-mark.png");
+}
   
 #circle{
     position: relative;
@@ -107,6 +138,7 @@ p{
     height: 83px;
 }
 
+/* ***** COLORES DE LAS FUENTES ***** */
 .sp-pendiente{
     color: red;
 }
@@ -127,6 +159,19 @@ p{
     margin-top: 30px;
 }
 
+.ph-alcalino{
+    color: blue;
+}
+
+.ph-neutro{
+    color: green;
+}
+
+.ph-acido{
+    color: orange;
+}
+
+/* ***** CONFIGURACIONES DE LA SECCIÓN GRÁFICA Y CONTROL DE ANIMACIONES DE LA GOTA ***** */
 .fase{
     margin-bottom: 40px;
 }
@@ -142,18 +187,20 @@ p{
 }
 
 .fill50{
+    transition-duration: 1s;
     background-image:
     linear-gradient(to top, rgba(245, 246, 252, 0) 25%, rgb(255, 255, 255) 50%),
-    url('imgs/Gota2.png');
+    url('imgs/Gota.png');
 }
 
 .fill25{
+    transition-duration: 1s;
     background-image:
     linear-gradient(to top, rgba(245, 246, 252, 0) 0%, rgb(255, 255, 255) 25%),
-    url('imgs/Gota2.png');
+    url('imgs/Gota.png');
 }
 
-/* Ajustes de acuerdo a las medidas de los dispositivos */
+/* ***** AJUSTES RESPONSIVE PARA DIFERENTES RESOLUCIONES ***** */
 @media (max-width: 1000px){
     .seccion-informacion{
         flex-direction: column-reverse;
@@ -177,7 +224,7 @@ p{
         width: 100%;
     }
 
-        .seccion-informacion{
+    .seccion-informacion{
         flex-direction: column-reverse;
         width: 100%;
     }

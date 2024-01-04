@@ -17,26 +17,30 @@
 
     <div class="seccion-informacion">
         <div class="info">
-            <p class="sp-negritas fase">Fase: <span id="faseLimpieza" class="sp-negritas">Dispensando regulador de pH</span> </p>
-            <p class="descripcion">El dispositivo se encuentra dispensando la cantidad de regulador de pH para su mezcla</p>
-            <p class="sp-mgtop_10">Valor de pH: <span id="phMedido" class="sp-pendiente">Por medir</span> </p>
+            <p class="sp-negritas fase">Fase <span id="faseActualInfo"> -</span>: <span id="faseLimpieza" class="sp-negritas">...</span> </p>
+            <p class="descripcion" id="detallesFase">El dispositivo se encuentra dispensando la cantidad de regulador de pH para su mezcla</p>
+            <p class="sp-mgtop_10">Valor de pH inicial: <span id="phMedido" class="sp-pendiente">Por medir</span> </p>
+            <p class="sp-mgtop_10">Valor de pH pre-regulacion: <span id="phMedidoPre" class="sp-pendiente">Por medir</span> </p>
+            <p class="sp-mgtop_10">Valor de pH resultado: <span id="phMedidoRes" class="sp-pendiente">Por medir</span> </p>
             <p class="sp-mgtop_10">Cantidad de regulador: <span id="reguladorDefinido" class="sp-pendiente">Por definir</span> </p>
-            <p class="sp-mgtop_10">Valor de turbidez medido: <span id="turbidezMedida" class="sp-pendiente">Por medir</span></p>
+            <p class="sp-mgtop_10">Valor de turbidez medido inicial: <span id="turbidezMedida" class="sp-pendiente">Por medir</span></p>
+            <p class="sp-mgtop_10">Valor de turbidez medido resultado: <span id="turbidezMedidaRes" class="sp-pendiente">Por medir</span></p>
             <p class="sp-mgtop_10">Cantidad de floculante: <span id="floculanteDefinido" class="sp-pendiente">Por definir</span></p>
         </div>
 
         <div id="circle">
+            <p class="fases">Fase <span id="faseActual">1</span>/7</p>
             <img class="gota" src="{{ url_for('static', filename='imgs/Gota.png')}}" alt="Imagen gota">
-            <div class='element img-bg-default pour'></div>
-            <div class='element img-bg-default mix'></div>
             <div class='element img-bg-default polused-water'></div>
-            <div class='element img-bg-default algorithm'></div>
+            <div class='element img-bg-default ph'></div>
             <div class='element img-bg-default pour'></div>
+            <div class='element img-bg-default algorithm'></div>
             <div class='element img-bg-default mix'></div>
             <div class='element img-bg-default wait'></div>
-            <div class='element img-bg-default pour'></div>
+            <div class='element img-bg-default filter'></div>
+            <!--<div class='element img-bg-default pour'></div>
             <div class='element img-bg-default ph'></div>
-            <div class='element img-bg-default algorithm'></div>
+            <div class='element img-bg-default algorithm'></div> -->
           </div>
     </div>
     <script src="{{ url_for('static', filename='script.js')}}"></script>
