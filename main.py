@@ -1,7 +1,6 @@
 from threading import Thread
 from flask import Flask, render_template
 import time, serial, json, os
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -94,25 +93,13 @@ def controlarPIC():
     #Se lee el archivo JSON
     leerJson()
 
-    # Pruebas del modelo Turbidez
-    numeroSensado = np.array([4.34])
-    print(numeroSensado)
-    prediccion = modeloRegulador.predict(numeroSensado.reshape(1,-1))
-    print(prediccion)
-
-    #Prueba del modelo pH
-    numeroSensado = np.array([7])
-    print(numeroSensado)
-    prediccion = modelopH.predict(numeroSensado.reshape(1,-1))
-    print("Prediccion pH: ", round(float(prediccion[0][0])))
-
     ## Se abre paso a realizar la secuencia de limpieza, configurando los parámetros de comunicación
     pic = serial.Serial('/dev/ttyS0', 9600, timeout=1)
 
     #Se inicializa un proceso de limpieza
     actualizarData("fase", 0);
     actualizarData("instruccion", "Esperando el llenado del contenedor")
-    respuestaComunicacion = gestionarMensaje(pic, "INIT\n".encode())
+    #respuestaComunicacion = gestionarMensaje(pic, "INIT\n".encode())
     print("Empieza una nueva limpieza")
 
     #Medir turbidez - Comando A1\n
@@ -122,16 +109,19 @@ def controlarPIC():
     respuestaComunicacion = gestionarMensaje(pic, "A1\n".encode())
     voltajeSensado = float(respuestaComunicacion) # Se obtiene un voltaje en cadena, por lo que se pasa a un flotante
     actualizarData('voltajeTurbidezMedidaInicial', voltajeSensado)
-    floculanteADispensar = round(modeloRegulador.predict(np.array(voltajeSensado).reshape(1,-1)))
+    floculanteADispensar = round(modeloRegulador.predict(np.array([voltajeSensado]).reshape(1,-1))[0][0])
     actualizarData('cantidadFloculante', floculanteADispensar)
     actualizarData('turbidezDeterminadaEnNTUInicial', -1120.4 * (voltajeSensado**2) + 5742.3 * voltajeSensado - 3778.236)
 
-    # Medir pH medio - Comando A2\n
+    # Medir pH inicial - Comando A2\n
         ## Recibe - Voltaje
     actualizarData("fase", 2)
     actualizarData("instruccion", "Midiendo ph inicial")
     respuestaComunicacion = gestionarMensaje(pic, "A2\n".encode());
-    actualizarData("phMedidoInicial", respuestaComunicacion)
+    voltajeSensado = float(respuestaComunicacion)
+    print("Voltaje pH: ", voltajeSensado)
+    valorpH = -6.65 * voltajeSensado + 24.482
+    actualizarData("phMedidoInicial", valorpH)
     
     #Dispensar sulfato y gomaguar - Comando PI300FI200F\n todo es en mililitros, primero sulfato y luego gomaguar en el comando
         ## Recibe - "OK"
@@ -151,6 +141,9 @@ def controlarPIC():
     # Medir pH medio - Comando A2\n
         ## Recibe - Voltaje
     respuestaComunicacion = gestionarMensaje(pic, "A2\n".encode())
+    voltajeSensado = float(respuestaComunicacion)
+    valorpH = -6.65 * voltajeSensado + 24.482
+    actualizarData("phMedidoMedio", valorpH)
     print("Voltaje pH: " + respuestaComunicacion)
     
     # Determinar y agregar bicarbonato - Comando T1I(Gramos)F
@@ -182,11 +175,23 @@ def controlarPIC():
     respuestaComunicacion = gestionarMensaje(pic, "T3\n".encode())
     print("Reposo completado")
 
+    # Se hacen las ultimas mediciones para validar la calidad final del agua
+    #Turbidez
+    respuestaComunicacion = gestionarMensaje(pic, "A1\n".encode())
+    voltajeSensado = float(respuestaComunicacion) # Se obtiene un voltaje en cadena, por lo que se pasa a un flotante
+    actualizarData('voltajeTurbidezMedidaFinal', voltajeSensado)
+    actualizarData('turbidezDeterminadaEnNTUFinal', -1120.4 * (voltajeSensado**2) + 5742.3 * voltajeSensado - 3778.236)
+    #pH
+    respuestaComunicacion = gestionarMensaje(pic, "A2\n".encode())
+    voltajeSensado = float(respuestaComunicacion)
+    valorpH = -6.65 * voltajeSensado + 24.482
+    actualizarData("phMedidoFinal", valorpH)
+
     # Bombeo al filtro - B\n
         ## Recibe - OK"
-        #respuestaComunicacion = gestionarMensaje(pic, "T2I0FI360F\n".encode())
-        
-    # Mandar E y resetear\n
+    actualizarData("fase", 7)
+    actualizarData("instruccion", "Filtrando el agua resultados")
+    espuestaComunicacion = gestionarMensaje(pic, "B\n".encode())
 
 
 #Funcion guardar informacion
