@@ -13,7 +13,7 @@ global datosProceso
 datosProceso = {
     'fase': 0,
     'instruccion': 'Inicializacion',
-    'isComplete': False,
+    'descripción': False,
     'cantidadFloculante': 'Por definir',
     'cantidadBicarbonato': 'Por definir',
     'phMedidoInicial': 'Por medir',
@@ -238,6 +238,6 @@ if __name__ == '__main__':
     hilo1.start()
 
     ## Se inicializa el servidor
-    app.run(host="localhost" ,debug=False, port=4000)
+    app.run(host="localhost", debug=False, port=4000)
 
     hilo1.join()

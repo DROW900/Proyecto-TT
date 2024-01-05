@@ -36,10 +36,12 @@ function initialize(){
         faseAnterior = faseActual-1;
 
         if (faseActual == 0){ // Fase 1
-            cambiarCirculoGrafico(faseActual,circles[faseActual-1],circles[6])
+            cambiarCirculoGrafico(faseActual,circles[faseActual-1],circles[6]);
+            uncheckCirculos();
         }
         if(faseAnterior != faseActual && faseActual > 0){ // Resto
             limpiarData();
+            checkUntilNow(faseActual);
             cambiarCirculoGrafico(faseActual,circles[faseActual-1],circles[faseAnterior-1]);
         }
         faseAnterior = faseActual;
@@ -106,6 +108,25 @@ function recolorearTextopH(elementoHTML){
     }
 }
 
+function uncheckCirculos(){
+    circles.forEach(circulo =>{
+        circulo.classList.remove("check");
+    })
+}
+
+function checkUntilNow(faseActual){
+    if(faseActual <= 1){
+        return false;
+    }
+    let indice = faseActual - 2;
+    circles.forEach((circulo, index) =>{
+        if(index > indice)
+            return true;
+        circulo.classList.remove("check");
+        circulo.classList.add("check");
+    })
+}
+
 function cambiarCirculoGrafico(faseActual,circuloActual,circuloAnterior = undefined){
     if(faseActual == 0){
         if(circuloAnterior){
@@ -123,6 +144,7 @@ function cambiarCirculoGrafico(faseActual,circuloActual,circuloAnterior = undefi
         return;
     }
     circuloAnterior.classList.remove("elementFaseActual")
+    circuloAnterior.classList.add("check");
     circuloActual.classList.add("elementFaseActual")
 }
 
