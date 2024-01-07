@@ -12,8 +12,8 @@ global datosProceso
 
 datosProceso = {
     'fase': 0,
-    'instruccion': 'Inicializacion',
-    'descripción': False,
+    'instruccion': 'Iniciando nueva limpieza',
+    'descripcion': 'Esperando el llenado del contenedor',
     'cantidadFloculante': 'Por definir',
     'cantidadBicarbonato': 'Por definir',
     'phMedidoInicial': 'Por medir',
@@ -93,8 +93,8 @@ def controlarPIC():
     #Se lee el archivo JSON
     leerJson()
 
-    ## Se abre paso a realizar la secuencia de limpieza, configurando los parámetros de comunicación
-    pic = serial.Serial('/dev/ttyS0', 9600, timeout=1)
+    ## Se configura el puerto serial
+    pic = serial.Serial('/dev/ttyS0', 9600)
 
     #Se inicializa un proceso de limpieza
     actualizarData("fase", 0);
@@ -190,7 +190,7 @@ def controlarPIC():
     # Bombeo al filtro - B\n
         ## Recibe - OK"
     actualizarData("fase", 7)
-    actualizarData("instruccion", "Filtrando el agua resultados")
+    actualizarData("instruccion", "Filtrando el agua resultado")
     espuestaComunicacion = gestionarMensaje(pic, "B\n".encode())
 
 
@@ -238,6 +238,6 @@ if __name__ == '__main__':
     hilo1.start()
 
     ## Se inicializa el servidor
-    app.run(host="localhost", debug=False, port=4000)
+    app.run(host="192.168.0.21", debug=False, port=4000)
 
     hilo1.join()

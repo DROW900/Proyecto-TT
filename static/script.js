@@ -1,6 +1,7 @@
 // Referencias a los apartados dinámicos
-const numeroFase = document.querySelector('#faseActual')
-const numeroFaseInfo = document.querySelector('#faseActualInfo')
+const numeroFase = document.querySelector('#faseActual');
+const descripcion = document.querySelector('#detallesFase');
+const numeroFaseInfo = document.querySelector('#faseActualInfo');
 const faseLimpieza = document.querySelector('#faseLimpieza');
 const phMedido = document.querySelector('#phMedido');
 const phMedidoPre = document.querySelector('#phMedidoPre');
@@ -10,6 +11,7 @@ const turbidezMedida = document.querySelector('#turbidezMedida');
 const turbidezMedidaRes = document.querySelector('#turbidezMedidaRes');
 const floculanteDefinido = document.querySelector('#floculanteDefinido');
 const circles = document.querySelectorAll('.element')
+
 const listaClasesImagenes = ["polused-water","ph","pour","algorithm","mix","wait","filter"];
 let textosAModificarHTML = {
     phMedido,
@@ -29,7 +31,7 @@ function initialize(){
 
     setInterval( async () => {
         // Hacemos la consulta de la información con el endpoint del servidor
-        const valor =  await fetch("http://localhost:4000/getInfo");
+        const valor =  await fetch("http://192.168.0.21:4000/getInfo");
         const parsedData = await valor.json();
 
         let faseActual = parsedData.fase;
@@ -49,6 +51,7 @@ function initialize(){
         numeroFase.textContent = faseActual;
         numeroFaseInfo.textContent = faseActual;
         faseLimpieza.textContent = parsedData.instruccion;
+        descripcion.textContent = parsedData.descripcion;
 
         if(parsedData.phMedidoInicial != 'Por medir'){
             phMedido.textContent = parsedData.phMedidoInicial;
