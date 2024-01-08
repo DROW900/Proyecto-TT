@@ -97,10 +97,11 @@ def controlarPIC():
     pic = serial.Serial('/dev/ttyS0', 9600, timeout=1)
 
     while True:
+        limpiarData()
         #Se inicializa un proceso de limpieza
         actualizarData("fase", 0)
         actualizarData("instruccion", "Esperando el llenado del contenedor")
-        #respuestaComunicacion = gestionarMensaje(pic, "INIT\n".encode())
+        respuestaComunicacion = gestionarMensaje(pic, "INIT\n".encode())
         print("Empieza una nueva limpieza", respuestaComunicacion)
 
         #Medir turbidez - Comando A1\n
@@ -202,7 +203,6 @@ def controlarPIC():
         respuestaComunicacion = gestionarMensaje(pic, "B\n".encode())
 
         print("Se terminó el ciclo de limpieza.")
-        limpiarData()
 
 #Funcion guardar informacion
 def actualizarData(dato, valor):
@@ -213,6 +213,7 @@ def actualizarData(dato, valor):
 
 #Función encargada de limpiar el archivo una vez se termine un ciclo de limpieza
 def limpiarData():
+    global datosProceso
     datosProceso = {
         'fase': 0,
         'instruccion': 'Iniciando nueva limpieza',
@@ -246,8 +247,6 @@ def leerPorUart(comunicador):
             if letra == '\n':
                 return respuestaString
             respuestaString += letra
-def definirTiempoDispensador(modelo):
-    print("Funciona")
 
 ## ***** ENDPOINTS DEL SERVIDOR *****
 @app.route('/getInfo')
@@ -268,6 +267,6 @@ if __name__ == '__main__':
     hilo1.start()
 
     ## Se inicializa el servidor
-    app.run(host="localhost", debug=False, port=4000)
+    app.run(host="192.168.0.18", debug=False, port=4000)
 
     hilo1.join()
