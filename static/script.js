@@ -11,8 +11,11 @@ const turbidezMedida = document.querySelector('#turbidezMedida');
 const turbidezMedidaRes = document.querySelector('#turbidezMedidaRes');
 const floculanteDefinido = document.querySelector('#floculanteDefinido');
 const circles = document.querySelectorAll('.element')
+const gota = document.querySelector('#imagenGota')
 
 const listaClasesImagenes = ["polused-water","ph","pour","algorithm","mix","wait","filter"];
+const listaClasesGota = ["fill0","fill14","fill28","fill42","fill56","fill70","fill84","fill98"];
+
 let textosAModificarHTML = {
     phMedido,
     phMedidoPre,
@@ -31,7 +34,7 @@ function initialize(){
 
     setInterval( async () => {
         // Hacemos la consulta de la información con el endpoint del servidor
-        const valor =  await fetch("http://192.168.0.18:4000/getInfo");
+        const valor =  await fetch("http://localhost:4000/getInfo");
         const parsedData = await valor.json();
 
         let faseActual = parsedData.fase;
@@ -46,6 +49,9 @@ function initialize(){
             checkUntilNow(faseActual);
             cambiarCirculoGrafico(faseActual,circles[faseActual-1],circles[faseAnterior-1]);
         }
+
+        actualizarGota(faseActual);
+
         faseAnterior = faseActual;
         // Hacemos los cambios según el bunche de información obtenida
         numeroFase.textContent = faseActual;
@@ -72,14 +78,20 @@ function initialize(){
             reguladorDefinido.classList.remove('sp-pendiente')
         }
 
-        if(parsedData.turbidezDeterminadaEnNTUInicial != 'Por medir')
+        if(parsedData.turbidezDeterminadaEnNTUInicial != 'Por medir'){
             turbidezMedida.textContent = parsedData.turbidezDeterminadaEnNTUInicial + " NTU"
+            turbidezMedida.classList.remove('sp-pendiente')
+        }
 
-        if(parsedData.turbidezDeterminadaEnNTUFinal != 'Por medir')
+        if(parsedData.turbidezDeterminadaEnNTUFinal != 'Por medir'){
             turbidezMedidaRes.textContent = parsedData.turbidezDeterminadaEnNTUFinal + " NTU"
+            turbidezMedidaRes.classList.remove('sp-pendiente')
+        }
 
-        if(parsedData.cantidadFloculante != 'Por definir')
+        if(parsedData.cantidadFloculante != 'Por definir'){
             floculanteDefinido.textContent = parsedData.cantidadFloculante + " ml"
+            floculanteDefinido.classList.remove('sp-pendiente')
+        }
     }, 5000)
 
 
@@ -102,12 +114,15 @@ function initialize(){
 function recolorearTextopH(elementoHTML){
     ph = elementoHTML.textContent
     elementoHTML.classList.remove('sp-pendiente');
-    if(ph > '8.5'){
+    if(ph > 8.5){
         elementoHTML.classList.add('ph-alcalino')
-    }else if(ph < '6.5'){
+        elementoHTML.textContent += " (Alto)"
+    }else if(ph < 6.5){
         elementoHTML.classList.add('ph-acido')
+        elementoHTML.textContent += " (Bajo)"
     }else{
         elementoHTML.classList.add('ph-neutro')
+        elementoHTML.textContent += " (Neutro)"
     }
 }
 
@@ -128,6 +143,12 @@ function checkUntilNow(faseActual){
         circulo.classList.remove("check");
         circulo.classList.add("check");
     })
+}
+
+function actualizarGota(faseActual){
+    let imagenActual = gota.classList[1];
+    gota.classList.remove(imagenActual);
+    gota.classList.add(listaClasesGota[faseActual]);
 }
 
 function cambiarCirculoGrafico(faseActual,circuloActual,circuloAnterior = undefined){
