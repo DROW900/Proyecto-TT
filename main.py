@@ -94,24 +94,31 @@ def controlarPIC():
     leerJson()
 
     ## Se configura el puerto serial
-    pic = serial.Serial('/dev/ttyS0', 9600)
+    pic = serial.Serial('/dev/ttyS0', 9600, timeout=1)
 
+    ## Prueba servo
+    print("Llamando el servo");
+    respuestaComunicacion = gestionarMensaje(pic, "T1\n".encode())
+    print(respuestaComunicacion)
+    
     #Se inicializa un proceso de limpieza
     actualizarData("fase", 0);
     actualizarData("instruccion", "Esperando el llenado del contenedor")
     #respuestaComunicacion = gestionarMensaje(pic, "INIT\n".encode())
-    print("Empieza una nueva limpieza")
+    print("Empieza una nueva limpieza", respuestaComunicacion)
 
     #Medir turbidez - Comando A1\n
         ## Recibe - Voltaje
     actualizarData("fase", 1)
     actualizarData("instruccion", "Midiendo turbidez inicial")
+    print("MIdiendo turbidez")
     respuestaComunicacion = gestionarMensaje(pic, "A1\n".encode())
+    print(respuestaComunicacion)
     voltajeSensado = float(respuestaComunicacion) # Se obtiene un voltaje en cadena, por lo que se pasa a un flotante
     actualizarData('voltajeTurbidezMedidaInicial', voltajeSensado)
     floculanteADispensar = round(modeloRegulador.predict(np.array([voltajeSensado]).reshape(1,-1))[0][0])
     actualizarData('cantidadFloculante', floculanteADispensar)
-    actualizarData('turbidezDeterminadaEnNTUInicial', -1120.4 * (voltajeSensado**2) + 5742.3 * voltajeSensado - 3778.236)
+    actualizarData('turbidezDeterminadaEnNTUInicial', round(-1120.4 * (voltajeSensado**2) + 5742.3 * voltajeSensado - 3778.236))
 
     # Medir pH inicial - Comando A2\n
         ## Recibe - Voltaje
@@ -148,7 +155,7 @@ def controlarPIC():
     
     # Determinar y agregar bicarbonato - Comando T1I(Gramos)F
         ## Recibe - OK"
-        #respuestaComunicacion = gestionarMensaje(pic, "A2\n".encode()) - Pendiente
+    respuestaComunicacion = gestionarMensaje(pic, "T1\n".encode())
         # TODO: OBTENER EL VALOR CON BASE EN EL ALGORITMO PREDICTIVO
         
     # Mezclar rapido 120 segundos
@@ -238,6 +245,6 @@ if __name__ == '__main__':
     hilo1.start()
 
     ## Se inicializa el servidor
-    app.run(host="192.168.0.21", debug=False, port=4000)
+    app.run(host="192.168.0.18", debug=False, port=4000)
 
     hilo1.join()

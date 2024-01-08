@@ -1,15 +1,1 @@
-{
-  "fase": 2,
-  "instruccion": "Midiend pH inicial",
-  "descripcion": "El dispositivo se encuentra determinando el pH inicial del agua jabonosa.",
-  "cantidadFloculante": "Por definir",
-  "cantidadBicarbonato": "Por definir",
-  "phMedidoInicial": "Por medir",
-  "phMedidoMedio": "Por medir",
-  "phMedidoFinal": "Por medir",
-  "voltajeTurbidezMedidaInicial": 0,
-  "voltajeTurbidezMedidaFinal": 0,
-  "turbidezDeterminadaEnNTUInicial": "2506.048904234",
-  "turbidezDeterminadaEnNTUFinal": "Por medir"
-}
-
+{"fase": 7, "instruccion": "Filtrando el agua resultado", "descripcion": "Esperando el llenado del contenedor", "cantidadFloculante": 101, "cantidadBicarbonato": "Por definir", "phMedidoInicial": 21.223499999999998, "phMedidoMedio": 21.223499999999998, "phMedidoFinal": 21.29, "voltajeTurbidezMedidaInicial": 3.62, "voltajeTurbidezMedidaFinal": 3.61, "turbidezDeterminadaEnNTUInicial": 2327, "turbidezDeterminadaEnNTUFinal": 2350.30216}

@@ -31,7 +31,7 @@ function initialize(){
 
     setInterval( async () => {
         // Hacemos la consulta de la información con el endpoint del servidor
-        const valor =  await fetch("http://192.168.0.21:4000/getInfo");
+        const valor =  await fetch("http://192.168.0.18:4000/getInfo");
         const parsedData = await valor.json();
 
         let faseActual = parsedData.fase;
